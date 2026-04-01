@@ -1,0 +1,44 @@
+.destinations {
+    list-style: none;
+    padding: 0;
+    max-width: 600px;
+    margin: auto;
+}
+
+.destinations li {
+    margin-bottom: 15px;
+}
+
+.card {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+
+    text-decoration: none;
+    color: black;
+
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 10px;
+
+    transition: all 0.2s ease;
+    background-color: white;
+}
+
+.card img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.card span {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    background-color: #f9f9f9;
+}
