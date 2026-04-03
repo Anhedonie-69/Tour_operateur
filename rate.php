@@ -15,8 +15,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
     $toId = $_POST['to_id'] ?? null;
     $authorId = $_SESSION['author']['id'];
 
-    if ($value && $toId) {
-        $scoreRepo->createScore($value, $toId, $authorId);
+    if ($value && $toId)
+    {
+        if (!$scoreRepo->hasUserAlreadyScored($authorId, $toId))
+        {
+            $scoreRepo->createScore($value, $toId, $authorId);
+        }
     }
 }
 

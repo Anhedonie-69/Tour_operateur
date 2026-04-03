@@ -82,6 +82,19 @@ class DestinationRepository
 
         return $destinations;
     }
+
+    public function CreateDestination($location, $price, $toId)
+    {
+        $request = $this->db->prepare('
+            INSERT INTO destination (location, price, tour_operator_id)
+            VALUES (:location, :price, :tour_operator_id)
+        ');
+        $request->execute([
+            'location' => $location,
+            'price' => $price,
+            'tour_operator_id' => $toId
+        ]);
+    }
 }
 
 ?>

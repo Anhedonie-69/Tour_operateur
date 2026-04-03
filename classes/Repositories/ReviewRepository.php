@@ -33,7 +33,7 @@ class ReviewRepository
     public function createReview($message, $toId, $authorId)
     {
         $request = $this->db->prepare('
-            INSERT INTO review (message, tour_operator_id, author_id
+            INSERT INTO review (message, tour_operator_id, author_id)
             VALUES (:message, :tour_operator_id, :author_id)
         ');
         $request->execute([
@@ -41,6 +41,18 @@ class ReviewRepository
             'tour_operator_id' => $toId,
             'author_id' => $authorId
         ]);
+    }
+
+    public function hasUserAlreadyReviewed($authorId, $toId)
+    {
+        $request = $this->db->prepare('
+            SELECT id FROM review
+            WHERE author_id = ? AND tour_operator_id = ?
+        ');
+        
+        $request->execute([$authorId, $toId]);
+    
+        return $request->fetch() !== false;
     }
 }
 

@@ -61,8 +61,6 @@ $tourOperatorManager = new TourOperatorManager(
     $scoreRepo
 );
 
-$user = isset($_SESSION['author']) ? $_SESSION['author']['name'] : "";
-
 ?>
 
 <!DOCTYPE html>
@@ -71,42 +69,38 @@ $user = isset($_SESSION['author']) ? $_SESSION['author']['name'] : "";
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Accueil</title>
+    <link href="public/assets/styles/header.css" rel="stylesheet">
     <link href="public/assets/styles/home.css" rel="stylesheet">
 </head>
 <body>
     <header>
-        <p id="author"><?= $user ?></p>
-    </header>
-    
-    <?php if (!isset($_SESSION['author'])): ?>
-
-        <h2>Entre ton nom pour continuer</h2>
-
+        <?php if (!isset($_SESSION['author'])): ?>
         <form method="POST" action="">
-            <input type="text" name="name" placeholder="Ton nom" required>
+            <input type="text" name="name" placeholder="Connexion" required>
             <button type="submit">Entrer</button>
         </form>
 
-    <?php else: ?>
-
+        <?php else: ?>
+            <p id="author"><?= $_SESSION['author']['name'] ?></p>
+        <?php endif; ?>
+        <?php if (isset($_SESSION['author'])): ?>
+            <form method="POST">
+                <button name="action" value="clearSession">Logout</button>
+            </form>
+        <?php endif; ?>
+    </header>
+    
     <h1>Destinations</h1>
 
     <ul class="destinations">
     <?php foreach ($tourOperatorManager->getAllDestination() as $destination): ?>
         <li>
             <a class="card" href="destinations.php?name=<?= urlencode($destination['name']); ?>">
-                <img src="<?= $destination['image']; ?>" alt="<?= $destination['name']; ?>">
+                <img src="<?= $destination['image']; ?>" alt="image de <?= $destination['name']; ?>">
                 <span><?= htmlspecialchars($destination['name']); ?></span>
             </a>
         </li>
     <?php endforeach; ?>
     </ul>
-
-    <?php endif; ?>
-
-    <form method="POST" action="">
-        <button name="action" value="clearSession">Clear session</button>
-    </form>
-
 </body>
 </html>

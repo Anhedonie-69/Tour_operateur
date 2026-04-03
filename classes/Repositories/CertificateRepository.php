@@ -18,9 +18,25 @@ class CertificateRepository
         $request->execute([$id]);
         $result = $request->fetch();
 
-        $certificate = CertificateMapper::mapToObject($result);
+        if($result){
+            $certificate = CertificateMapper::mapToObject($result);
+        }
+        else
+        {
+            $certificate = null;
+        }
 
         return $certificate;
+    }
+
+    public function createCertificate($toId, $expiresAt, $signatory)
+    {
+        $request = $this->db->prepare('
+        
+        ');
+        $request->execute([
+
+        ]);
     }
 }
 

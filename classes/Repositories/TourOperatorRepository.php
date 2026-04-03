@@ -40,6 +40,38 @@ class TourOperatorRepository
         return $results;
     }
 
+    public function getAll()
+    {
+        $request = $this->db->prepare('
+            SELECT * FROM tour_operator
+        ');
+        $request->execute();
+
+        $results = $request->fetchAll();
+
+        $allTo = [];
+
+        foreach($results as $row)
+        {
+            $allTo[] = TourOperatorMapper::mapToObject($row);
+        }
+
+        return $allTo;
+
+    }
+
+    public function createTourOperator($name, $link)
+    {
+        $request = $this->db->prepare('
+            INSERT INTO tour_operator (name, link)
+            VALUES (:name, :link)
+        ');
+        $request->execute([
+            'name' => $name,
+            'link' => $link
+        ]);
+    }
+
 }
 
 ?>

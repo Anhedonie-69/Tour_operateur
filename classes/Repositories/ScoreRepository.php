@@ -42,6 +42,18 @@ class ScoreRepository
             'author_id' => $authorId
         ]);
     }
+
+    public function hasUserAlreadyScored($authorId, $toId)
+    {
+        $request = $this->db->prepare('
+            SELECT id FROM score
+            WHERE author_id = ? AND tour_operator_id = ?
+        ');
+        
+        $request->execute([$authorId, $toId]);
+    
+        return $request->fetch() !== false;
+    }
 }
 
 ?>
